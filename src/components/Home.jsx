@@ -29,6 +29,16 @@ export default function Home() {
 
     const navigate = useNavigate()
 
+    const handleDownloadCV = () => {
+        const cvUrl = "/mustansar_resume.pdf"
+        const link = document.createElement("a")
+        link.href = cvUrl
+        link.download = "resume.pdf"
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+
     return (
         <div className="flex flex-col gap-y-6 p-6 min-h-4/5 h-auto bg-[url('./assets/bg5.jpg')] bg-cover">
             <div className="flex justify-around md:flex-row flex-col items-center gap-5">
@@ -65,6 +75,7 @@ export default function Home() {
                             whileHover={{ scale: 1.1, backgroundColor: "#00897B" }} // Lighter Teal on Hover
                             whileTap={{ scale: 0.9 }}
                             className="bg-teal-700 px-3 py-1.5 text-white font-semibold rounded-2xl cursor-pointer transition-all"
+                            onClick={handleDownloadCV}
                         >
                             Download CV
                         </motion.button>
