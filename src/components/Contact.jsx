@@ -24,10 +24,10 @@ export default function Contact() {
         }
 
         const messageDetails = {
-            name,
-            email,
-            title,
-            message: text
+            name: name.trim(),
+            email: email.trim(),
+            title: title.trim(),
+            message: text.trim()
         }
 
         try {
@@ -66,7 +66,7 @@ export default function Contact() {
                     Let's Connect
                 </h1>
                 <p className="text-lg tracking-[5px] font-bold text-slate-700">Got a project in MIND? Let's discuss it</p>
-                {alert && <AlertBox message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
+                {alert && <AlertBox message={alert?.message} type={alert?.type} onClose={() => setAlert(null)} />}
             </div>
             <motion.div
                 initial={{ opacity: 0, y: 50 }}

@@ -1,5 +1,5 @@
 import React from "react"
-import { FaNodeJs, FaHtml5, FaCss3, FaGithub } from "react-icons/fa"
+import { FaNodeJs, FaHtml5, FaCss3, FaGithub, FaReact } from "react-icons/fa"
 import { SiJavascript, SiTailwindcss, SiMongodb, SiPostman, SiFirebase, SiGit } from "react-icons/si"
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
@@ -41,6 +41,7 @@ export default function Home() {
 
     return (
         <div className="flex flex-col gap-y-6 p-6 min-h-4/5 h-auto bg-[url('./assets/bg5.jpg')] bg-cover">
+            <h1 className="text-2xl text-red-600">Contact form and Hire me form may not work due to backend deployment issue</h1>
             <div className="flex justify-around md:flex-row flex-col items-center gap-5">
                 <div className="flex flex-col gap-y-4">
                     <motion.div
@@ -125,6 +126,7 @@ export default function Home() {
                         viewport={{ once: true }}
                         className="w-[180px] flex justify-around gap-3 border-[2px] rounded-xl p-3 bg-gray-200 border-gray-500 cursor-pointer h-20 items-center"
                     >
+                        <div className="text-cyan-400"><FaReact /></div>
                         <div className="text-[#8CC84B]"><FaNodeJs /></div>
                         <div className="text-[#38B2AC]"><SiTailwindcss /></div>
                         <div className="text-[#47A248]"><SiMongodb /></div>
