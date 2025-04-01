@@ -59,6 +59,7 @@ export default function Footer() {
     return (
         <footer className="flex md:flex-row flex-col-reverse justify-around items-center bg-gray-300 py-4 md:gap-x-1 gap-y-2">
             <div className="md:w-[50%] flex flex-col gap-y-3">
+                {alert && <AlertBox message={alert?.message} type={alert?.type} onClose={() => setAlert(null)} />}
                 <div className="md:text-3xl sm:text-2xl text-xl text-center font-sans md:font-semibold font-medium my-2">
                     Transforming Ideas into Reality with Code
                 </div>
@@ -79,7 +80,6 @@ export default function Footer() {
                 <div className="text-center text-gray-600 py-4 text-sm">
                     &copy; {new Date().getFullYear()} MHJutt. All rights reserved.
                 </div>
-                {alert && <AlertBox message={alert?.message} type={alert?.type} onClose={() => setAlert(null)} />}
             </div>
             <div className="bg-green-200 backdrop-blur-lg p-6 rounded-lg shadow-lg md:w-[30%] w-[80%]">
                 <h1 className="text-2xl font-bold text-slate-700 text-center mb-3">Hire Me</h1>
@@ -109,7 +109,7 @@ export default function Footer() {
                     disabled={isLoading}
                     onClick={handleHireMe}
                 >
-                    { isLoading ? "Sending..." : "Send Message" }
+                    {isLoading ? "Sending..." : "Send Message"}
                 </button>
             </div>
         </footer>
