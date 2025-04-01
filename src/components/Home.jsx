@@ -41,7 +41,6 @@ export default function Home() {
 
     return (
         <div className="flex flex-col gap-y-6 p-6 min-h-4/5 h-auto bg-[url('./assets/bg5.jpg')] bg-cover">
-            <h1 className="text-2xl text-red-600">Contact form and Hire me form may not work due to backend deployment issue</h1>
             <div className="flex justify-around md:flex-row flex-col items-center gap-5">
                 <div className="flex flex-col gap-y-4">
                     <motion.div

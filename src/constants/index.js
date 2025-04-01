@@ -1,4 +1,4 @@
-const server = "http://localhost:4000"
+const server = "https://portfolio-backend-mgqx.onrender.com"
 
 export {
     server
