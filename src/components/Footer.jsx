@@ -29,6 +29,9 @@ export default function Footer() {
             projectDetail: projectDetail.trim()
         }
 
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 30000)
+
         try {
             setIsLoading(true)
             const response = await fetch(`${server}/api/v1/hire-me`, {
@@ -38,6 +41,7 @@ export default function Footer() {
                 },
                 body: JSON.stringify(messageDetails)
             })
+            clearTimeout(timeout)
             const data = await response.json()
 
             if (response.ok) {
@@ -51,8 +55,13 @@ export default function Footer() {
                 setAlert({ message: data.message, type: "error" })
             }
         } catch (err) {
-            setIsLoading(false)
-            setAlert({ message: err.message || "Something went wrong", type: "error" })
+            if (err.name === "AbortError") {
+                setIsLoading(false)
+                setAlert({ message: "Request timed out. Please try again.", type: "error" })
+            } else {
+                setIsLoading(false)
+                setAlert({ message: err.message || "Something went wrong", type: "error" })
+            }
         }
     }
 

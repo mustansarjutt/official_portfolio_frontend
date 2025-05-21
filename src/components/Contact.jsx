@@ -30,6 +30,9 @@ export default function Contact() {
             message: text.trim()
         }
 
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 30000)
+
         try {
             setIsLoading(true)
             const response = await fetch(`${server}/api/v1/send-message`, {
@@ -37,8 +40,10 @@ export default function Contact() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(messageDetails)
+                body: JSON.stringify(messageDetails),
+                signal: controller.signal
             })
+            clearTimeout(timeout)
             const data = await response.json()
             if (response.ok) {
                 setIsLoading(false)
@@ -52,8 +57,13 @@ export default function Contact() {
                 setAlert({ message: data.message, type: "error" })
             }
         } catch (err) {
-            setIsLoading(false)
-            setAlert({ message: err.message || "Something went wrong", type: "error" })
+            if (err.name === "AbortError") {
+                setIsLoading(false)
+                setAlert({ message: "Request timed out. Please try again.", type: "error" })
+            } else {
+                setIsLoading(false)
+                setAlert({ message: err.message || "Something went wrong", type: "error" })
+            }
         }
     }
 
