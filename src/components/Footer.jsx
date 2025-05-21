@@ -30,7 +30,7 @@ export default function Footer() {
         }
 
         const controller = new AbortController()
-        const timeout = setTimeout(() => controller.abort(), 30000)
+        const timeout = setTimeout(() => controller.abort(), 20000)
 
         try {
             setIsLoading(true)
@@ -73,13 +73,13 @@ export default function Footer() {
                     Transforming Ideas into Reality with Code
                 </div>
                 <div className="flex justify-around md:text-3xl text-2xl">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/mustansarjutt" target="_blank" rel="noopener noreferrer">
                         <FaGithub className="text-[#181717]" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/in/mustansar-hussain-72973227a" target="_blank" rel="noopener noreferrer">
                         <FaLinkedin className="text-[#0077B5]" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.upwork.com/freelancers/~0146878121019fca31?mp_source=share" target="_blank" rel="noopener noreferrer">
                         <FaUpwork className="text-[#6FDA44]" />
                     </a>
                     <a href="#" target="_blank" rel="noopener noreferrer">
