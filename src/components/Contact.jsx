@@ -22,6 +22,9 @@ export default function Contact() {
             setAlert({ message: "Email is Invalid", type: "error" })
             return
         }
+        if (text.length < 10) {
+            setAlert({ message: "Message must be consists of minimum 10 characters", type: "error" })
+        }
 
         const messageDetails = {
             name: name.trim(),

@@ -39,7 +39,8 @@ export default function Footer() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(messageDetails)
+                body: JSON.stringify(messageDetails),
+                signal: controller.signal
             })
             clearTimeout(timeout)
             const data = await response.json()
