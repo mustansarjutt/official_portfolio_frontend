@@ -1,6 +1,6 @@
 const blogList = [
   {
-    id: "blog1",
+    id: "react-basics",
     title: "React Basics",
     headings: [
       { id: "intro", label: "Introduction" },
@@ -17,7 +17,7 @@ const blogList = [
     },
   },
   {
-    id: "blog2",
+    id: "node-guide",
     title: "Node.js Guide",
     headings: [
       { id: "setup", label: "Setup" },
@@ -33,6 +33,6 @@ const blogList = [
         "Node.js works well with various databases, but MongoDB is a popular NoSQL choice often used with Node. Mongoose is an ODM (Object Data Modeling) library that provides schema-based solutions to model your data. You can connect to MongoDB using `mongoose.connect(connectionURL)`. Mongoose allows you to define schemas and models, perform CRUD operations, and apply validations. Alternatively, Node also supports SQL databases like MySQL or PostgreSQL using packages like `sequelize` or `knex`.",
     },
   },
-];
+]
 
-export { blogList };
+export { blogList }

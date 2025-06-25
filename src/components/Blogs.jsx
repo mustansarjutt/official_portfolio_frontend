@@ -1,83 +1,77 @@
-import { useState, useEffect } from "react"
-import { useInView } from "react-intersection-observer"
+import { FaBars, FaTimes } from "react-icons/fa"
+import { useState, useEffect, useMemo, useCallback } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import Headings from "../blogs/Headings"
+import BlogBody from "../blogs/BlogBody"
 import { blogList } from "../blogs/BlogsData"
 
-function BlogSection({ id, label, content, onVisible }) {
-  const { ref, inView } = useInView({ threshold: 0.7 })
+function Blogs() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const selectedBlog = useMemo(() => blogList.find((b) => b.id === id), [id])
 
   useEffect(() => {
-    if (inView) {
-      onVisible(id)
+    if (!id && blogList.length > 0) {
+      navigate(`/blogs/${blogList[0].id}`, { replace: true })
     }
-  }, [inView, id, onVisible])
+  }, [id, navigate])
+
+  const handleClick = useCallback((newId) => {
+    if (newId !== id) {
+      navigate(`/blogs/${newId}`)
+    }
+    setMenuOpen(false)
+  }, [id, navigate])
 
   return (
-    <section ref={ref} id={id} className="mb-10 scroll-mt-24">
-      <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">{label}</h2>
-      <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{content}</p>
-    </section>
-  )
-}
-
-function Blogs() {
-  const [selectedBlogId, setSelectedBlogId] = useState(blogList[0].id)
-  const [activeSectionId, setActiveSectionId] = useState(null)
-  const selectedBlog = blogList.find((b) => b.id === selectedBlogId)
-
-  return (
-    <div className="flex flex-col md:flex-row h-screen">
-      {/* Blog List Sidebar */}
-      <aside className="w-full md:w-1/5 bg-gray-100 p-4 md:p-6 border-b md:border-b-0 md:border-r overflow-y-auto sticky top-0 md:h-screen z-10">
-        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Blog Posts</h2>
-        {blogList.map((blog) => (
-          <div
-            key={blog.id}
-            onClick={() => {
-              setSelectedBlogId(blog.id)
-              setActiveSectionId(null)
-            }}
-            className={`cursor-pointer text-sm sm:text-base p-2 rounded-md mb-2 transition-colors duration-200 hover:bg-blue-100 ${
-              blog.id === selectedBlogId ? "bg-blue-200 font-semibold" : ""
-            }`}
+    <div className="relative flex flex-col md:flex-row w-full h-full">
+      <div className="md:hidden p-3">
+        <button
+          className="text-2xl text-gray-700"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
+        >
+          <FaBars />
+        </button>
+      </div>
+      <div
+        className={`fixed md:static top-0 left-0 h-full md:z-[45] z-[100] bg-white p-4 w-[70%] sm:w-[50%] md:w-[20%] md:border-r-2 md:border-r-sky-300 transition-transform duration-300 ease-in-out ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
+        <div className="flex justify-end mb-2 md:hidden">
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="text-2xl text-gray-700 hover:text-red-600 transition"
+            aria-label="Close menu"
           >
-            {blog.title}
+            <FaTimes />
+          </button>
+        </div>
+        <Headings setId={handleClick} activeId={id} />
+      </div>
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 bg-black/25 z-40 md:hidden"
+          aria-label="Close menu overlay"
+        ></div>
+      )}
+      <div className="flex-1 h-full overflow-y-auto bg-slate-100 p-4 md:w-[80%]">
+        {!selectedBlog ? (
+          <div className="text-slate-800 font-semibold text-xl flex items-center justify-center h-full">
+            404 - Blog Not Found
           </div>
-        ))}
-      </aside>
-
-      {/* Main Blog Content */}
-      <main className="w-full md:w-3/5 p-4 sm:p-6 overflow-y-auto scroll-smooth h-screen">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">{selectedBlog.title}</h1>
-        {selectedBlog.headings.map((sec) => (
-          <BlogSection
-            key={sec.id}
-            id={sec.id}
-            label={sec.label}
-            content={selectedBlog.content[sec.id]}
-            onVisible={(id) => setActiveSectionId(id)}
+        ) : (
+          <BlogBody
+            title={selectedBlog.title}
+            headings={selectedBlog.headings}
+            contents={selectedBlog.content}
           />
-        ))}
-      </main>
-
-      {/* Section Navigation Sidebar */}
-      <aside className="w-full md:w-1/5 bg-gray-50 p-4 md:p-6 border-t md:border-t-0 md:border-l sticky top-0 md:h-screen overflow-y-auto z-10">
-        <h2 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Sections</h2>
-        <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-          {selectedBlog.headings.map((sec) => (
-            <li
-              key={sec.id}
-              className={`cursor-pointer transition-colors duration-150 hover:text-blue-400 ${
-                activeSectionId === sec.id ? "text-blue-600 font-bold" : ""
-              }`}
-              onClick={() =>
-                document.getElementById(sec.id)?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              {sec.label}
-            </li>
-          ))}
-        </ul>
-      </aside>
+        )}
+      </div>
     </div>
   )
 }
