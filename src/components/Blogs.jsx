@@ -9,6 +9,7 @@ function Blogs() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [currentHeading, setCurrentHeading] = useState(false)
 
   const selectedBlog = useMemo(() => blogList.find((b) => b.id === id), [id])
 
@@ -50,7 +51,7 @@ function Blogs() {
             <FaTimes />
           </button>
         </div>
-        <Headings setId={handleClick} activeId={id} />
+        <Headings setId={handleClick} activeId={id} currentHeading={currentHeading} />
       </div>
       {menuOpen && (
         <div
@@ -69,6 +70,7 @@ function Blogs() {
             title={selectedBlog.title}
             headings={selectedBlog.headings}
             contents={selectedBlog.content}
+            onHeadingInView={setCurrentHeading}
           />
         )}
       </div>
