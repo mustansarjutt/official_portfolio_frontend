@@ -1,150 +1,153 @@
-import React from "react"
-import { FaNodeJs, FaHtml5, FaCss3, FaGithub, FaReact } from "react-icons/fa"
-import { SiJavascript, SiTailwindcss, SiMongodb, SiPostman, SiFirebase, SiGit } from "react-icons/si"
-import { motion } from "framer-motion"
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { SiFiverr, SiUpwork } from "react-icons/si";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom"
-import pic from "../assets/me1.png"
+import image from "../assets/m1.png";
+import Card from "./Card";
+import { BackgroundGradient } from "./ui/background-gradient";
 
-export default function Home() {
-    const boxVariants1 = {
-        hidden: { opacity: 0, x: 50 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut" } },
-        hover: { scale: 1.05, boxShadow: "0px 0px 15px rgba(0,0,0,0.2)" }
-    }
-    const boxVariants2 = {
-        hidden: { opacity: 0, x: -50 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeIn" } },
-        hover: { scale: 1.05, boxShadow: "0px 0px 15px rgba(0,0,0,0.2)" }
-    }
-    const boxVariants3 = {
-        hidden: { opacity: 0, x: 50 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
-        hover: { scale: 1.05, boxShadow: "0px 0px 15px rgba(0,0,0,0.2)" }
-    }
-    const textVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-        hover: { scale: 1.05, textShadow: "0px 0px 10px rgba(255, 165, 0, 0.7)" }
-    }
+function Home() {
+  const handleDownloadCV = () => {
+    const cvURL = "/mustansar_resume.pdf";
+    const link = document.createElement("a");
+    link.href = cvURL;
+    link.download = "resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const handleDownloadCV = () => {
-        const cvUrl = "/mustansar_resume.pdf"
-        const link = document.createElement("a")
-        link.href = cvUrl
-        link.download = "resume.pdf"
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-    }
-
-    return (
-        <div className="flex flex-col gap-y-6 p-6 min-h-4/5 h-auto bg-[url('./assets/bg5.jpg')] bg-cover">
-            <div className="flex justify-around md:flex-row flex-col items-center gap-5">
-                <div className="flex flex-col gap-y-4">
-                    <motion.div
-                        variants={textVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        whileHover="hover"
-                        viewport={{ once: true }}
-                        className="text-3xl text-center"
-                    >
-                        Hii! I am{" "}
-                        <motion.span
-                            className="font-bold text-orange-500"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                        >
-                            Mustansar Gill
-                        </motion.span>
-                    </motion.div>
-                    <motion.p
-                        variants={textVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="text-3xl text-gray-700 text-center"
-                    >
-                        MERN Stack Developer | Freelancer
-                    </motion.p>
-                    <div className="flex flex-row justify-center gap-x-3">
-                        <motion.button
-                            whileHover={{ scale: 1.1, backgroundColor: "#00897B" }} // Lighter Teal on Hover
-                            whileTap={{ scale: 0.9 }}
-                            className="bg-teal-700 px-3 py-1.5 text-white font-semibold rounded-2xl cursor-pointer transition-all"
-                            onClick={handleDownloadCV}
-                        >
-                            Download CV
-                        </motion.button>
-                        <motion.button
-                            whileHover={{ scale: 1.1, backgroundColor: "#F57C00" }} // Darker Orange on Hover
-                            whileTap={{ scale: 0.9 }}
-                            className="bg-gradient-to-r from-orange-400 to-orange-600 px-3 py-1.5 text-white font-semibold rounded-2xl cursor-pointer transition-all"
-                            onClick={() => navigate("/contact-us")}
-                        >
-                            Contact Me
-                        </motion.button>
-                    </div>
-                </div>
-                <div className="flex justify-center items-center">
-                    <motion.img
-                        src={pic}
-                        alt="me"
-                        className="md:w-72 w-56 rounded-4xl border-[4px] border-[#574964] shadow-2xl cursor-pointer"
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 100, delay: 0.5 }}
-                    />
-                </div>
-            </div>
-            <hr className="border-2 border-slate-900 w-full" />
-            <div className="flex justify-center items-center flex-col gap-y-4">
-                <h1 className="text-3xl font-sans font-bold text-green-800">Skills & Tools</h1>
-                <div className="md:w-[60%] sm:w-[70%] w-[90%] flex justify-around items-center flex-wrap flex-row border-2 border-slate-300 rounded-3xl text-3xl py-5 bg-slate-300/35 gap-3.5">
-                    <motion.div
-                        variants={boxVariants1}
-                        initial="hidden"
-                        whileInView="visible"
-                        whileHover="hover"
-                        viewport={{ once: true }}
-                        className="w-[180px] flex justify-around gap-3 border-[2px] rounded-xl p-3 bg-gray-200 border-gray-500 cursor-pointer h-20 items-center"
-                    >
-                        <div className="text-[#F7DF1E]"><SiJavascript /></div>
-                        <div className="text-[#1572B6]"><FaCss3 /></div>
-                        <div className="text-[#E34F26]"><FaHtml5 /></div>
-                    </motion.div>
-                    <motion.div
-                        variants={boxVariants2}
-                        initial="hidden"
-                        whileInView="visible"
-                        whileHover="hover"
-                        viewport={{ once: true }}
-                        className="w-[180px] flex justify-around gap-3 border-[2px] rounded-xl p-3 bg-gray-200 border-gray-500 cursor-pointer h-20 items-center"
-                    >
-                        <div className="text-cyan-400"><FaReact /></div>
-                        <div className="text-[#8CC84B]"><FaNodeJs /></div>
-                        <div className="text-[#38B2AC]"><SiTailwindcss /></div>
-                        <div className="text-[#47A248]"><SiMongodb /></div>
-                    </motion.div>
-                    <motion.div
-                        variants={boxVariants3}
-                        initial="hidden"
-                        whileInView="visible"
-                        whileHover="hover"
-                        viewport={{ once: true }}
-                        className="w-[180px] flex justify-around gap-3 border-[2px] rounded-xl p-3 bg-gray-200 border-gray-500 cursor-pointer h-20 items-center"
-                    >
-                        <div className="text-[#181717]"><FaGithub /></div>
-                        <div className="text-[#F05032]"><SiGit /></div>
-                        <div className="text-[#FFCA28]"><SiFirebase /></div>
-                        <div className="text-[#FF6C37]"><SiPostman /></div>
-                    </motion.div>
-                </div>
-            </div>
+  return (
+    <>
+      <div className="text-white min-h-screen flex items-center justify-center md:flex-row flex-col p-4 md:p-6 md:gap-y-0 gap-y-6">
+        <div className="md:w-[50%] w-full flex flex-col justify-center items-center md:items-start p-6">
+          <motion.h1
+            className="lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            Hello! I am
+          </motion.h1>
+          <motion.h1
+            className="sm:text-5xl md:text-6xl text-4xl font-bold text-orange-500 mt-2"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            Mustansar Jutt
+          </motion.h1>
+          <motion.h2
+            className="text-2xl md:text-4xl mt-1"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            MERN Stack Developer
+          </motion.h2>
+          <motion.div
+            className="flex md:gap-x-6 gap-x-4 items-center mt-6 text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeIn" }}
+          >
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 p-3 rounded-full hover:text-[#0077B5] transition-all duration-300"
+            >
+              <FaLinkedin className="md:text-[28px] sm:text-[23px] text-[20px]" />
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 p-3 rounded-full hover:text-[#1DBF73] transition-all duration-300"
+            >
+              <SiFiverr className="md:text-[28px] sm:text-[23px] text-[20px]" />
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 p-3 rounded-full hover:text-[#6FDA44] transition-all duration-300"
+            >
+              <SiUpwork className="md:text-[28px] sm:text-[23px] text-[20px]" />
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 p-3 rounded-full hover:text-[#E4405F] transition-all duration-300"
+            >
+              <FaInstagram className="md:text-[28px] sm:text-[23px] text-[20px]" />
+            </a>
+          </motion.div>
         </div>
-    )
+        <div className="md:w-[50%] w-full flex flex-col justify-center p-6 items-center">
+          <BackgroundGradient className="rounded-[22px] lg:w-[400px] md:w-[370px] sm:w-[320px] w-[265px]">
+            <motion.img
+              src={image}
+              alt="img"
+              className="w-full rounded-[22px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
+          </BackgroundGradient>
+          <motion.div
+            className="flex justify-center items-center mt-6 gap-x-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            <motion.button
+              className="border-[2px] border-orange-500 bg-black text-orange-500 px-2 py-1.5 rounded-2xl font-semibold cursor-pointer hover:text-black hover:border-black hover:bg-orange-500 transition-all duration-300"
+              onClick={handleDownloadCV}
+              whileTap={{
+                scale: 0.7,
+                transition: { duration: 0.15, ease: "easeInOut" },
+              }}
+            >
+              Download CV
+            </motion.button>
+            <motion.button
+              className="border-[2px] border-orange-500 bg-black text-orange-500 px-2 py-1.5 rounded-2xl font-semibold cursor-pointer hover:text-black hover:border-black hover:bg-orange-500 transition-all duration-300"
+              onClick={() => navigate("/contact-me")}
+              whileTap={{
+                scale: 0.7,
+                transition: { duration: 0.15, ease: "easeInOut" },
+              }}
+            >
+              Contact Me
+            </motion.button>
+          </motion.div>
+        </div>
+      </div>
+      <div className="min-h-screen bg-gray-950 text-white p-7">
+        <h1 className="text-center md:text-5xl sm:text-4xl text-3xl md:font-bold sm:font-semibold py-4">
+          Skills
+        </h1>
+        <div className="flex justify-center items-center gap-4 flex-wrap mt-6">
+          <Card
+            heading="Frontend Development"
+            description="Skilled in React.js, JSX, responsive design, component architecture, hooks, and dynamic UI development."
+          />
+          <Card
+            heading="Backend Development"
+            description="Experienced in Node.js, Express.js, RESTful APIs, MongoDB, authentication, and server-side logic."
+          />
+          <Card
+            heading="Tools"
+            description="Proficient with Git, GitHub, VS Code, Postman, npm, SSH, CCleaner, and BleachBit for optimization."
+          />
+        </div>
+      </div>
+    </>
+  );
 }
+
+export default Home
