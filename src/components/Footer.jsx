@@ -1,9 +1,9 @@
 import { FaGithub, FaLinkedin, FaUpwork } from "react-icons/fa6";
 import { SiFiverr } from "react-icons/si";
 import { useState } from "react";
-import AlertBox from "../utils/AlertBox";
 import { isValidEmail } from "../utils/EmailValidator";
-import { server } from "../constants"
+import { server } from "../constants";
+import { toast } from "react-hot-toast";
 
 function Footer() {
   const [email, setEmail] = useState("");
@@ -11,22 +11,27 @@ function Footer() {
   const [projectDetail, setProjectDetail] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [alert, setAlert] = useState(null);
+
+  const clearFields = () => {
+    setEmail("");
+    setTitle("");
+    setProjectDetail("");
+  };
 
   const handleHireMe = async () => {
     if ([email, title, projectDetail].some((field) => field.trim() === "")) {
-      setAlert({ message: "All fields are required", type: "error" });
+      toast.error("All fields are required");
       return;
     }
     if (!isValidEmail(email)) {
-      setAlert({ message: "Invalid email format", type: "error" });
+      toast.error("Invalid email format");
       return;
     }
 
     const messageDetails = {
       email: email.trim(),
       title: title.trim(),
-      projectDetail: projectDetail.trim(),
+      projectDetail: projectDetail.trim()
     };
 
     const controller = new AbortController();
@@ -34,54 +39,39 @@ function Footer() {
 
     try {
       setIsLoading(true);
+
       const response = await fetch(`${server}/api/v1/hire-me`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(messageDetails),
-        signal: controller.signal,
+        signal: controller.signal
       });
-      clearTimeout(timeout);
+
       const data = await response.json();
 
       if (response.ok) {
-        setIsLoading(false);
-        setAlert({ message: data.message, type: "success" });
-        setEmail("");
-        setTitle("");
-        setProjectDetail("");
+        toast.success(data.message || "Message sent successfully");
+        clearFields();
       } else {
-        setIsLoading(false);
-        setAlert({ message: data.message, type: "error" });
+        toast.error(data.message || "Something went wrong");
       }
     } catch (err) {
       if (err.name === "AbortError") {
-        setIsLoading(false);
-        setAlert({
-          message: "Request timed out. Please try again.",
-          type: "error",
-        });
+        toast.error("Request timed out. Please try again");
       } else {
-        setIsLoading(false);
-        setAlert({
-          message: err.message || "Something went wrong",
-          type: "error",
-        });
+        toast.error("Something went wrong");
       }
+    } finally {
+      setIsLoading(false);
+      clearTimeout(timeout);
     }
   };
 
   return (
     <footer className="flex md:flex-row flex-col-reverse justify-around items-center bg-slate-900 py-4 md:gap-x-1 gap-y-2">
       <div className="md:w-[50%] flex flex-col gap-y-3">
-        {alert && (
-          <AlertBox
-            message={alert?.message}
-            type={alert?.type}
-            onClose={() => setAlert(null)}
-          />
-        )}
         <div className="md:text-3xl sm:text-2xl text-xl text-center font-sans md:font-semibold font-medium my-2 text-white">
           Transforming Ideas into Reality with Code
         </div>

@@ -1,6 +1,8 @@
 import { NavBar, Footer } from "./components";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { toastOptions } from "./constants";
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
@@ -17,6 +19,7 @@ function App() {
       <NavBar isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme} />
       <Outlet />
       <Footer />
+      <Toaster toastOptions={toastOptions} />
     </div>
   );
 }

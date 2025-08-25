@@ -54,7 +54,7 @@ function Home() {
             transition={{ duration: 0.7, ease: "easeIn" }}
           >
             <a
-              href="#"
+              href="https://www.linkedin.com/in/mustansar-hussain-72973227a"
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 p-3 rounded-full hover:text-[#0077B5] transition-all duration-300"
@@ -70,7 +70,7 @@ function Home() {
               <SiFiverr className="md:text-[28px] sm:text-[23px] text-[20px]" />
             </a>
             <a
-              href="#"
+              href="https://www.upwork.com/freelancers/~0146878121019fca31?mp_source=share"
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 p-3 rounded-full hover:text-[#6FDA44] transition-all duration-300"

@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,10 +12,12 @@ function NavBar() {
     <nav className="w-full bg-black text-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
         <div className="text-white cursor-pointer select-none">
-          <h1 className="font-semibold text-2xl flex items-center">
+          <Link
+            to="/"
+            className="font-semibold text-2xl flex items-center">
             COD
             <Menu className="inline text-orange-500 mx-1" size={28} />R
-          </h1>
+          </Link>
         </div>
         <ul className="hidden md:flex items-center gap-x-8 font-medium">
           {navItems.map((item, i) => (

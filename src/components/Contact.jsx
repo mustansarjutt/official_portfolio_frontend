@@ -1,38 +1,42 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import AlertBox from "../utils/AlertBox";
 import { isValidEmail } from "../utils/EmailValidator";
 import { server } from "../constants";
+import { toast } from "react-hot-toast";
 
 function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const clearFields = () => {
+    setName("");
+    setEmail("");
+    setTitle("");
+    setText("");
+  };
+
   const handleContactUs = async () => {
-    if ([name, email, title, text].some((field) => field?.trim() === "")) {
-      setAlert({ message: "All fields are required!", type: "error" });
+    if ([name, email, title, text].some((field) => !field || field.trim() === "")) {
+      toast.error("All fields are required");
       return;
     }
     if (!isValidEmail(email)) {
-      setAlert({ message: "Email is Invalid", type: "error" });
+      toast.error("Email is invalid");
       return;
     }
     if (text.length < 10) {
-      setAlert({
-        message: "Message must be consists of minimum 10 characters",
-        type: "error",
-      });
+      toast.error("Message must consist of at least 10 characters");
+      return;
     }
 
     const messageDetails = {
       name: name.trim(),
       email: email.trim(),
       title: title.trim(),
-      message: text.trim(),
+      message: text.trim()
     };
 
     const controller = new AbortController();
@@ -40,41 +44,33 @@ function Contact() {
 
     try {
       setIsLoading(true);
+
       const response = await fetch(`${server}/api/v1/send-message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(messageDetails),
-        signal: controller.signal,
+        signal: controller.signal
       });
-      clearTimeout(timeout);
+
       const data = await response.json();
+
       if (response.ok) {
-        setIsLoading(false);
-        setAlert({ message: data.message, type: "success" });
-        setName("");
-        setEmail("");
-        setTitle("");
-        setText("");
+        toast.success(data.message || "Message sent successfully");
+        clearFields();
       } else {
-        setIsLoading(false);
-        setAlert({ message: data.message, type: "error" });
+        toast.error(data.message || "Something went wrong");
       }
     } catch (err) {
       if (err.name === "AbortError") {
-        setIsLoading(false);
-        setAlert({
-          message: "Request timed out. Please try again.",
-          type: "error",
-        });
+        toast.error("Request timed out. Please try again");
       } else {
-        setIsLoading(false);
-        setAlert({
-          message: err.message || "Something went wrong",
-          type: "error",
-        });
+        toast.error("Something went wrong");
       }
+    } finally {
+      setIsLoading(false);
+      clearTimeout(timeout);
     }
   };
 
@@ -87,13 +83,6 @@ function Contact() {
         <p className="text-lg tracking-[5px] font-bold text-slate-300">
           Got a project in MIND? Let's discuss it
         </p>
-        {alert && (
-          <AlertBox
-            message={alert?.message}
-            type={alert?.type}
-            onClose={() => setAlert(null)}
-          />
-        )}
       </div>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
