@@ -1,6 +1,7 @@
 // const server = "https://portfolio-backend-mgqx.onrender.com";
 // const server = "http://localhost:4000";
-const server = "http://72.61.149.248"
+// const server = "http://72.61.149.248"
+const server = ""
 
 const toastOptions = {
     duration: 3000,
