@@ -34,8 +34,8 @@ function Footer() {
       projectDetail: projectDetail.trim()
     };
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 40000);
+    // const controller = new AbortController();
+    // const timeout = setTimeout(() => controller.abort(), 40000);
 
     try {
       setIsLoading(true);
@@ -46,7 +46,7 @@ function Footer() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(messageDetails),
-        signal: controller.signal
+        // signal: controller.signal
       });
 
       const data = await response.json();
@@ -65,7 +65,7 @@ function Footer() {
       }
     } finally {
       setIsLoading(false);
-      clearTimeout(timeout);
+      // clearTimeout(timeout);
     }
   };
 

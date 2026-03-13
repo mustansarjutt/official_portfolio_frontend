@@ -39,8 +39,8 @@ function Contact() {
       message: text.trim()
     };
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 40000);
+    // const controller = new AbortController();
+    // const timeout = setTimeout(() => controller.abort(), 40000);
 
     try {
       setIsLoading(true);
@@ -51,7 +51,7 @@ function Contact() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(messageDetails),
-        signal: controller.signal
+        // signal: controller.signal
       });
 
       const data = await response.json();
@@ -70,7 +70,7 @@ function Contact() {
       }
     } finally {
       setIsLoading(false);
-      clearTimeout(timeout);
+      // clearTimeout(timeout);
     }
   };
 
