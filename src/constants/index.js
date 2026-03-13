@@ -1,7 +1,4 @@
-// const server = "https://portfolio-backend-mgqx.onrender.com";
-// const server = "http://localhost:4000";
-// const server = "http://72.61.149.248"
-const server = "https://pfbackend.72.61.149.248.sslip.io"
+const server = "https://portfolio-backend-18zd.onrender.com";
 
 const toastOptions = {
     duration: 3000,
