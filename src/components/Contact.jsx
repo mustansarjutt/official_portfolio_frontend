@@ -40,7 +40,7 @@ function Contact() {
     };
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
+    const timeout = setTimeout(() => controller.abort(), 40000);
 
     try {
       setIsLoading(true);
